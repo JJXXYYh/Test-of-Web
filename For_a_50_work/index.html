@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>归“员”田居</title>
+<style>
+  /* 全局设置 */
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif; /* 设置默认字体 */
+    background-image: url('src/background_color.png'); /* 添加背景图片 */
+    background-size: 100% 82%; /* 背景图片覆盖整个区域 */
+    background-position: bottom; /* 背景图片居中 */
+    background-repeat: no-repeat; /* 不重复背景图片 */
+  }
+
+  /* 顶部样式 */
+  .header {
+    position: fixed; /* 固定顶部 */
+    top: 0;
+    right: 0;
+    width: 100%; /* 宽度为满屏 */
+    z-index: 1; /* 确保在其他元素之上 */
+    background-color: rgba(255, 255, 255, 0.7); /* 白色背景，透明度70% */
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+  }
+
+  /* 导航栏样式 */
+  .navbar {
+    overflow: hidden;
+    position: fixed; /* 固定顶部 */
+    top: 0px;
+    right: 0px;
+    width: 100%; /* 宽度为满屏 */
+    height: 90px;
+    display: flex;
+    opacity: 70%;
+    justify-content: flex-end; /* 将内容靠右对齐 */
+    align-items: center; /* 垂直居中 */
+    padding-right: 200px; /* 右侧内边距 */
+    box-sizing: border-box; /* 确保padding不会增加元素宽度 */
+    background-color: rgba(255, 255, 255, 0.7); /* 添加白色背景，透明度70% */
+    z-index: 1; /* 保证背景覆盖其他元素 */
+  }
+  .navbar a {
+    color: #545454; /* 文字颜色 */
+    text-align: center;
+    padding: 14px 20px; /* 内边距 */
+    text-decoration: none; /* 去除下划线 */
+    transition: color 0.3s; /* 添加过渡效果 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+  .navbar a:hover {
+    color: #000000; /* 鼠标悬停时文字颜色变化 */
+  }
+
+  /* 左上角图标和文本 */
+  .logo-text {
+    position: fixed;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    padding: 10px; /* 内边距 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+  .logo-text img {
+    vertical-align: middle; /* 图标垂直对齐 */
+    margin-top: -180px; /* 图标上边距 */
+    margin-right: -150px; /* 图标右边距 */
+    width: 248px; /* 图标宽度 */
+    height: 351px; /* 图标高度 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+  .logo-text .text {
+    margin-top: -125px;
+    margin-left: 100px;
+    font-weight: 900;
+    font-family: 'KaiTi', '楷体', serif; /* 使用特殊的cursive字体 */
+    font-size: 30px; /* 字体大小 */
+    color: #000000; /* 特殊颜色 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 新增的小字 */
+  .sub-text {
+    position: fixed;
+    padding: 5px 20px; /* 内边距 */
+    top: 50px; /* 位置在主文字下方 */
+    left: 200px; /* 向右移动 */
+    font-size: 14px; /* 较小的字体 */
+    color: #1ca012a3; /* 不同的颜色 */
+    letter-spacing: 5px;
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 左上角图片 */
+  .left-corner-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100px; /* 调整图片大小 */
+    height: 100px; /* 调整图片大小 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 右上角图片 */
+  .right-corner-image {
+    position: fixed;
+    top: -10px;
+    right: 0;
+    width: 100px; /* 调整图片大小 */
+    height: 100px; /* 调整图片大小 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 轮播图样式 */
+  .carousel {
+    position: absolute;
+    top: 150px; /* 在导航栏下方 */
+    left: 0; /* 左对齐 */
+    width: 100%; /* 轮播图宽度拉伸至整个网页宽度 */
+    height: calc(66.67vh); /* 高度为当前网页的2/3 */
+    overflow: hidden; /* 隐藏超出部分 */
+    border-radius: 10px; /* 圆角 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 阴影效果 */
+  }
+
+  .carousel img {
+    width: 100%; /* 图片宽度 */
+    height: 100%; /* 图片高度 */
+    object-fit: cover; /* 让图片覆盖整个容器 */
+    display: none; /* 默认不显示 */
+  }
+  .carousel img.active {
+    display: block; /* 显示当前活动图片 */
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-text">
+    <img src="src/logo_new.png" alt="小图标">
+    <span class="text">归“员”田居</span>
+  </div>
+
+  <div class="sub-text">
+    稻田系疗愈空间
+  </div>
+
+  <div class="navbar">
+    <a href="index.html">首页</a>
+    <a href="introduction.html">空间介绍</a>
+    <a href="conception.html">空间理念</a>
+    <a href="const_event.html">常驻活动</a>
+    <a href="special_event.html">特定疗愈活动</a>
+    <a href="staff.html">公司人员</a>
+  </div>
+
+  <img src="src/bamboo1.png" alt="左上角图片" class="left-corner-image">
+  <img src="src/bamboo2.png" alt="右上角图片" class="right-corner-image">
+</div>
+
+<!-- 轮播图 -->
+<div class="carousel">
+  <img src="src/pic_in_mid1.jpg" alt="轮播图1" class="active">
+  <img src="src/pic_in_mid2.jpg" alt="轮播图2">
+  <img src="src/pic_in_mid3.jpg" alt="轮播图3">
+</div>
+
+<script>
+  // 轮播图的 JavaScript
+  const slides = document.querySelectorAll('.carousel img');
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      if (i === index) {
+        slide.classList.add('active');
+      }
+    });
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length; // 循环轮播
+    showSlide(currentSlide);
+  }
+
+  setInterval(nextSlide, 3000); // 每3秒切换一次
+</script>
+
+</body>
+</html>

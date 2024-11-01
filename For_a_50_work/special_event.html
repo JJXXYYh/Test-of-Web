@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1, minimun-scale=1, user-scale=no">
+<title>归“员”田居</title>
+<style>
+  p {
+    text-indent: 2em; /* 设置段落首行缩进为2em */
+    padding: 5px;
+  }
+
+  /* 全局设置 */
+  body, html {
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif; /* 设置默认字体 */
+    background-image: url('src/background_color.png'); /* 添加背景图片 */
+    background-size: 100% 82%; /* 背景图片覆盖整个区域 */
+    background-position: bottom; /* 背景图片居中 */
+    background-repeat: no-repeat; /* 不重复背景图片 */
+  }
+
+  .fixed-container{
+    position:fixed;
+    overflow: auto;
+    min-width: 1536px;
+    min-height: 720px;
+    overflow: auto;
+  }
+  /* 顶部样式 */
+  .header {
+    position: absolute; /* 固定顶部 */
+    top: 0;
+    right: 0;
+    width: 100%; /* 宽度为满屏 */
+    z-index: 1; /* 确保在其他元素之上 */
+    background-color: rgba(255, 255, 255, 0.7); /* 白色背景，透明度70% */
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+  }
+  /* 导航栏样式 */
+  .navbar {
+    overflow-x: auto;
+    position: absolute; /* 固定顶部 */
+    top: 0px;
+    right: 0px;
+    width: 100%; /* 宽度为满屏 */
+    height: 90px;
+    display: flex;
+    opacity: 70%;
+    justify-content: flex-end; /* 将内容靠右对齐 */
+    align-items: center; /* 垂直居中 */
+    padding-right: 200px; /* 右侧内边距 */
+    box-sizing: border-box; /* 确保padding不会增加元素宽度 */
+    background-color: rgba(255, 255, 255, 0.7); /* 添加白色背景，透明度70% */
+    z-index: 4; /* 保证背景覆盖其他元素 */
+  }
+  .navbar a {
+    color: #545454; /* 文字颜色 */
+    text-align: center;
+    padding: 14px 20px; /* 内边距 */
+    text-decoration: none; /* 去除下划线 */
+    transition: color 0.3s; /* 添加过渡效果 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+  .navbar a:hover {
+    color: #000000; /* 鼠标悬停时文字颜色变化 */
+  }
+
+  /* 左上角图标和文本 */
+  .logo-text {
+    position: absolute;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    padding: 10px; /* 内边距 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+  .logo-text img {
+    vertical-align: middle; /* 图标垂直对齐 */
+    margin-top: -180px; /* 图标上边距 */
+    margin-right: -150px; /* 图标右边距 */
+    width: 248px; /* 图标宽度 */
+    height: 351px; /* 图标高度 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+  .logo-text .text {
+    margin-top: -125px;
+    margin-left: 100px;
+    font-weight: 900;
+    font-family: 'KaiTi', '楷体', serif; /* 使用特殊的cursive字体 */
+    font-size: 30px; /* 字体大小 */
+    color: #000000; /* 特殊颜色 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 新增的小字 */
+  .sub-text {
+    position: absolute;
+    padding: 5px 20px; /* 内边距 */
+    top: 50px; /* 位置在主文字下方 */
+    left: 200px; /* 向右移动 */
+    font-size: 14px; /* 较小的字体 */
+    color: #1ca012a3; /* 不同的颜色 */
+    letter-spacing: 5px;
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 左上角图片 */
+  .left-corner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px; /* 调整图片大小 */
+    height: 100px; /* 调整图片大小 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 右上角图片 */
+  .right-corner-image {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    width: 100px; /* 调整图片大小 */
+    height: 100px; /* 调整图片大小 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+
+  #text-bar {
+    display: flex;
+    position: absolute;
+    margin: 0 auto;
+    bottom: 8px; /* 定位到页面底部 */
+    left: 50%;
+    transform: translateX(-50%); /* 水平居中 */
+    align-self: end;
+    width: 66.66%;
+    height: 80%;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    display: flex;
+    z-index: 3;
+}
+
+#list-container {
+    width: 175px;
+    overflow-y: auto;
+    background-color: #317449;
+    padding: 10px;
+    z-index: 2;
+}
+
+#text-list {
+    align-self: center;
+    list-style-type: none;
+    padding: 0;
+    z-index: 2;
+}
+
+#text-list li {
+    color: #ffffff;
+    font-size: 20px;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    z-index: 2;
+}
+
+#text-list li:hover {
+    color: #d3e155;
+}
+
+#text-list li ul {
+    left: 50%;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#text-list li ul li {
+    padding: 8px 20px; /* Indent sub-items */
+    text-align: center; /* 文字水平居中 */
+    text-align: left;
+    border-bottom: none; /* Remove border for sub-items */
+    width: 90%; /* Limit width to allow centering */
+    margin: 0 auto; /* Center sub-items */
+}
+
+#text-list > li > ul > li {
+    text-align: center; /* 确保文本居中 */
+    /* 其他样式属性 */
+}
+
+
+
+
+#text-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 18px;
+    width: 100%; 
+    min-width: 300px; 
+    padding: 10px;
+    background-color: #8b99867b;
+}
+
+.text-panel {
+    display: none;
+    width: 100%;
+}
+
+.text-panel p {
+   color:#444444;
+    margin: 0;
+    font-stretch: 2px;
+    
+}
+
+.pics img {
+  display: flex;
+  margin: 10px auto;
+  width: 80%;
+}
+  
+</style>
+</head>
+
+<body>
+  <div class="fixed-container">
+    <div class="header">
+      <div class="logo-text">
+        <img src="src/logo_new.png" alt="小图标">
+        <span class="text">归“员”田居</span>
+      </div>
+
+      <div class="sub-text">
+        稻田系疗愈空间
+      </div>
+
+      <div class="navbar">
+        <a href="index.html">首页</a>
+        <a href="introduction.html">空间介绍</a>
+        <a href="conception.html">空间理念</a>
+        <a href="const_event.html">常驻活动</a>
+        <a href="special_event.html">特定疗愈活动</a>
+        <a href="staff.html">公司人员</a>
+      </div>
+      <img src="src/bamboo1.png" alt="左上角图片" class="left-corner-image">
+      <img src="src/bamboo2.png" alt="右上角图片" class="right-corner-image">
+    </div>
+  </div>
+  <div id="text-bar">
+    <div id="list-container">
+      <ul id="text-list">
+        <li data-target="text1">家庭人群</li>
+        <li data-target="text2">旅居人群</li>
+        <li data-target="text3">新农人</li>
+        <!-- Add more list items as needed -->
+      </ul>
+    </div>
+  <div id="text-content">
+    <div id="text1" class="text-panel">
+      <h4>家庭人群：</h4>
+      <div class="pics">
+        <img src="src/特殊活动/家庭人群1.png" alt="家庭1">
+        <img src="src/特殊活动/家庭人群2.png" alt="家庭2">
+        <img src="src/特殊活动/家庭人群3.png" alt="家庭3">
+      </div>
+    </div>
+    <div id="text2" class="text-panel" style="display: none;">
+      <h4>旅居人群：</h4>
+      <div class="pics">
+        <img src="src/特殊活动/旅居人群1.png" alt="旅居1">
+        <img src="src/特殊活动/旅居人群2.png" alt="旅居2">
+        <img src="src/特殊活动/旅居人群3.png" alt="旅居3">
+      </div>
+    </div>
+    <div id="text3" class="text-panel" style="display: none;">
+      <h4>新农人：</h4>
+      <div class="pics">
+        <img src="src/特殊活动/以茶会友.png" alt="新农人1">
+        <img src="src/特殊活动/情绪交流会.png" alt="新农人2">
+        <img src="src/特殊活动/编制曼陀罗.png" alt="新农人3">
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const textList = document.getElementById('text-list');
+    const textPanels = document.querySelectorAll('.text-panel');
+    const defaultPanel = document.getElementById('text1');
+    const defaultListItem = textList.querySelector('[data-target="text1"]');
+
+    // 设置默认显示的文本面板和列表项样式
+    defaultPanel.style.display = 'block';
+    defaultListItem.style.color = '#ffb300a3';
+
+    textList.addEventListener('click', function(e) {
+        if (e.target.tagName === 'LI') {
+            // Hide all text panels
+            textPanels.forEach(panel => {
+                panel.style.display = 'none';
+            });
+
+            // Change color of all list items
+            textList.querySelectorAll('li').forEach(item => {
+                item.style.color = '';
+            });
+
+            // Show the selected text panel and change the color of the selected list item
+            const targetId = e.target.getAttribute('data-target');
+            const selectedPanel = document.getElementById(targetId);
+            selectedPanel.style.display = 'block';
+            e.target.style.color = '#ffb300a3';
+        }
+    });
+});
+
+</script>
+</html>
+

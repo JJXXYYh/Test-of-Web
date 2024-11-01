@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1, minimun-scale=1, user-scale=no">
+<title>归“员”田居</title>
+<style>
+  p {
+    text-indent: 2em; /* 设置段落首行缩进为2em */
+    padding: 5px;
+  }
+
+  /* 全局设置 */
+  body, html {
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif; /* 设置默认字体 */
+    background-image: url('src/background_color.png'); /* 添加背景图片 */
+    background-size: 100% 82%; /* 背景图片覆盖整个区域 */
+    background-position: bottom; /* 背景图片居中 */
+    background-repeat: no-repeat; /* 不重复背景图片 */
+  }
+
+  .fixed-container{
+    position:fixed;
+    overflow: auto;
+    min-width: 1536px;
+    min-height: 720px;
+    overflow: auto;
+  }
+  /* 顶部样式 */
+  .header {
+    position: absolute; /* 固定顶部 */
+    top: 0;
+    right: 0;
+    width: 100%; /* 宽度为满屏 */
+    z-index: 1; /* 确保在其他元素之上 */
+    background-color: rgba(255, 255, 255, 0.7); /* 白色背景，透明度70% */
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+  }
+  /* 导航栏样式 */
+  .navbar {
+    overflow-x: auto;
+    position: absolute; /* 固定顶部 */
+    top: 0px;
+    right: 0px;
+    width: 100%; /* 宽度为满屏 */
+    height: 90px;
+    display: flex;
+    opacity: 70%;
+    justify-content: flex-end; /* 将内容靠右对齐 */
+    align-items: center; /* 垂直居中 */
+    padding-right: 200px; /* 右侧内边距 */
+    box-sizing: border-box; /* 确保padding不会增加元素宽度 */
+    background-color: rgba(255, 255, 255, 0.7); /* 添加白色背景，透明度70% */
+    z-index: 4; /* 保证背景覆盖其他元素 */
+  }
+  .navbar a {
+    color: #545454; /* 文字颜色 */
+    text-align: center;
+    padding: 14px 20px; /* 内边距 */
+    text-decoration: none; /* 去除下划线 */
+    transition: color 0.3s; /* 添加过渡效果 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+  .navbar a:hover {
+    color: #000000; /* 鼠标悬停时文字颜色变化 */
+  }
+
+  /* 左上角图标和文本 */
+  .logo-text {
+    position: absolute;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    padding: 10px; /* 内边距 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+  .logo-text img {
+    vertical-align: middle; /* 图标垂直对齐 */
+    margin-top: -180px; /* 图标上边距 */
+    margin-right: -150px; /* 图标右边距 */
+    width: 248px; /* 图标宽度 */
+    height: 351px; /* 图标高度 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+  .logo-text .text {
+    margin-top: -125px;
+    margin-left: 100px;
+    font-weight: 900;
+    font-family: 'KaiTi', '楷体', serif; /* 使用特殊的cursive字体 */
+    font-size: 30px; /* 字体大小 */
+    color: #000000; /* 特殊颜色 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 新增的小字 */
+  .sub-text {
+    position: absolute;
+    padding: 5px 20px; /* 内边距 */
+    top: 50px; /* 位置在主文字下方 */
+    left: 200px; /* 向右移动 */
+    font-size: 14px; /* 较小的字体 */
+    color: #1ca012a3; /* 不同的颜色 */
+    letter-spacing: 5px;
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 左上角图片 */
+  .left-corner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px; /* 调整图片大小 */
+    height: 100px; /* 调整图片大小 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 右上角图片 */
+  .right-corner-image {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    width: 100px; /* 调整图片大小 */
+    height: 100px; /* 调整图片大小 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+
+  #text-bar {
+    display: flex;
+    position: absolute;
+    margin: 0 auto;
+    bottom: 8px; /* 定位到页面底部 */
+    left: 50%;
+    transform: translateX(-50%); /* 水平居中 */
+    align-self: end;
+    width: 66.66%;
+    height: 80%;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    display: flex;
+    z-index: 3;
+}
+
+#list-container {
+    width: 175px;
+    overflow-y: auto;
+    background-color: #317449;
+    padding: 10px;
+    z-index: 2;
+}
+
+#text-list {
+    align-self: center;
+    list-style-type: none;
+    padding: 0;
+    z-index: 2;
+}
+
+#text-list li {
+    color: #ffffff;
+    font-size: 20px;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    z-index: 2;
+}
+
+#text-list li:hover {
+    color: #d3e155;
+}
+
+#text-list li ul {
+    left: 50%;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#text-list li ul li {
+    padding: 8px 20px; /* Indent sub-items */
+    text-align: center; /* 文字水平居中 */
+    text-align: left;
+    border-bottom: none; /* Remove border for sub-items */
+    width: 90%; /* Limit width to allow centering */
+    margin: 0 auto; /* Center sub-items */
+}
+
+#text-list > li > ul > li {
+    text-align: center; /* 确保文本居中 */
+    /* 其他样式属性 */
+}
+
+
+
+
+#text-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 18px;
+    width: 100%; 
+    min-width: 300px; 
+    padding: 10px;
+    background-color: #8b99867b;
+}
+
+.text-panel {
+    display: none;
+    width: 100%;
+}
+
+.text-panel p {
+   color:#444444;
+    margin: 0;
+    font-stretch: 2px;
+    
+}
+
+.pics img {
+  display: flex;
+  margin: 10px auto;
+  width: 80%;
+}
+  
+</style>
+</head>
+
+<body>
+  <div class="fixed-container">
+    <div class="header">
+      <div class="logo-text">
+        <img src="src/logo_new.png" alt="小图标">
+        <span class="text">归“员”田居</span>
+      </div>
+
+      <div class="sub-text">
+        稻田系疗愈空间
+      </div>
+
+      <div class="navbar">
+        <a href="index.html">首页</a>
+        <a href="introduction.html">空间介绍</a>
+        <a href="conception.html">空间理念</a>
+        <a href="const_event.html">常驻活动</a>
+        <a href="special_event.html">特定疗愈活动</a>
+        <a href="staff.html">公司人员</a>
+      </div>
+      <img src="src/bamboo1.png" alt="左上角图片" class="left-corner-image">
+      <img src="src/bamboo2.png" alt="右上角图片" class="right-corner-image">
+    </div>
+  </div>
+  <div id="text-bar">
+    <div id="list-container">
+      <ul id="text-list">
+        <li data-target="text1">开发定位</li>
+        <li data-target="text2">目标群体</li>
+        <!-- Add more list items as needed -->
+      </ul>
+    </div>
+  <div id="text-content">
+    <div id="text1" class="text-panel" style="display: none;">
+      <h4>开发定位</h4>
+      <p>本项目以“五感设计法”为核心出发点，利用农田自然景观以及景观空间，打造一个以“五感疗愈”为主，针对性疗愈活动为辅的疗愈基地，赋予洪家村疗愈活力。</p>
+      <p>田间稻田景观的搭建从视觉层面调制出暖色调的田间氛围。而稻田与点缀的花卉所富含的“芳香”能够不受视线的限制，为本基地画龙点睛。再结合洪家村当地特色农副产品山珍野味以及室内“以竹代塑”的植物质感，与“五感疗愈”空间设计相辅相成。</p>
+      <div class="pics">
+        <img src="src/理念/开发理念.png" alt="理念">
+      </div>
+      <p>通过自然景观疗愈的方式，使得人们在五感上达到人与乡村，人与环境以及人与自然的链接。利用田间多点位布置的收扩音设备，结合室内外景观，形成舒缓情绪、缓解压力、收获身心平衡的接待疗愈空间功能,从而放大周边田间风光之美。</p>
+      <p>通过设置疗愈项目以及疗愈活动，可以使体验者在生活忙碌的缝隙之中，静下来感受自我心灵，汲取自然的疗愈能量。从“视觉、听觉、触觉、嗅觉、味觉”五个感觉，进行全身心的放松。</p>
+    </div>
+    <div id="text2" class="text-panel" style="display: none;">
+      <h4>目标群体</h4>
+      <p>旅居者:</p>
+      <p>大多来自长三角地区，或因较大的工作压力，或因加班导致的身体消耗，旅居者会定期前往自然风光较好的地点，给自己进行一次身心的放松。此类人群对自然的疗愈功能比较依赖，对于能够提供独特体验和高品质服务的场所有着较高的关注度，有一定的消费能力，注重生活生活品质和健康养生。</p>
+      <div class="pics">
+        <img src="src/理念/目标人群.png" alt="目标人群">
+      </div>
+      <p>亲子群体:</p>
+      <p>亲子关系是现代生活中的重要关系，家长会希望孩子在学业压力中有所放松，成为“行万里路，读万卷书”的人。家长希望孩子对自然的了解不再浮于表面，同时在上班之余带着家庭成员参与亲子活动，拉近家庭关系，走进孩子的心。此类群体需要有自然环境较好，有亲子友好活动的场所。</p>
+      <p>新农人:</p>
+      <p>新农人是对家乡、土地有深厚情感的人群，是将来重要的常驻乡村、推动乡村发展的新鲜血液。他们会对村庄有内的建设以及娱乐设施有一定的需求，同时因为他们自我的责任感较强，在推动乡村建设时也会有较大的压力，因此这类人群对娱乐设施以及疗愈设施的需求较大。</p>
+    </div>
+  </div>
+</div>
+</body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const textList = document.getElementById('text-list');
+    const textPanels = document.querySelectorAll('.text-panel');
+    const defaultPanel = document.getElementById('text1');
+    const defaultListItem = textList.querySelector('[data-target="text1"]');
+
+    // 设置默认显示的文本面板和列表项样式
+    defaultPanel.style.display = 'block';
+    defaultListItem.style.color = '#ffb300a3';
+
+    textList.addEventListener('click', function(e) {
+        if (e.target.tagName === 'LI') {
+            // Hide all text panels
+            textPanels.forEach(panel => {
+                panel.style.display = 'none';
+            });
+
+            // Change color of all list items
+            textList.querySelectorAll('li').forEach(item => {
+                item.style.color = '';
+            });
+
+            // Show the selected text panel and change the color of the selected list item
+            const targetId = e.target.getAttribute('data-target');
+            const selectedPanel = document.getElementById(targetId);
+            selectedPanel.style.display = 'block';
+            e.target.style.color = '#ffb300a3';
+        }
+    });
+});
+
+</script>
+</html>
+

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>归“员”田居</title>
+<style>
+  p {
+    text-indent: 2em; /* 设置段落首行缩进为2em */
+    padding: 5px;
+  }
+
+  /* 全局设置 */
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif; /* 设置默认字体 */
+    background-image: url('src/background_color.png'); /* 添加背景图片 */
+    background-size: 100% 82%; /* 背景图片覆盖整个区域 */
+    background-position: bottom; /* 背景图片居中 */
+    background-repeat: no-repeat; /* 不重复背景图片 */
+  }
+
+  /* 顶部样式 */
+  .header {
+    position: fixed; /* 固定顶部 */
+    top: 0;
+    right: 0;
+    width: 100%; /* 宽度为满屏 */
+    z-index: 1; /* 确保在其他元素之上 */
+    background-color: rgba(255, 255, 255, 0.7); /* 白色背景，透明度70% */
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+  }
+
+  /* 导航栏样式 */
+  .navbar {
+    overflow: hidden;
+    position: fixed; /* 固定顶部 */
+    top: 0px;
+    right: 0px;
+    width: 100%; /* 宽度为满屏 */
+    height: 90px;
+    display: flex;
+    opacity: 70%;
+    justify-content: flex-end; /* 将内容靠右对齐 */
+    align-items: center; /* 垂直居中 */
+    padding-right: 200px; /* 右侧内边距 */
+    box-sizing: border-box; /* 确保padding不会增加元素宽度 */
+    background-color: rgba(255, 255, 255, 0.7); /* 添加白色背景，透明度70% */
+    z-index: 4; /* 保证背景覆盖其他元素 */
+  }
+  .navbar a {
+    color: #545454; /* 文字颜色 */
+    text-align: center;
+    padding: 14px 20px; /* 内边距 */
+    text-decoration: none; /* 去除下划线 */
+    transition: color 0.3s; /* 添加过渡效果 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+  .navbar a:hover {
+    color: #000000; /* 鼠标悬停时文字颜色变化 */
+  }
+
+  /* 左上角图标和文本 */
+  .logo-text {
+    position: fixed;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    padding: 10px; /* 内边距 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+  .logo-text img {
+    vertical-align: middle; /* 图标垂直对齐 */
+    margin-top: -180px; /* 图标上边距 */
+    margin-right: -150px; /* 图标右边距 */
+    width: 248px; /* 图标宽度 */
+    height: 351px; /* 图标高度 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+  .logo-text .text {
+    margin-top: -125px;
+    margin-left: 100px;
+    font-weight: 900;
+    font-family: 'KaiTi', '楷体', serif; /* 使用特殊的cursive字体 */
+    font-size: 30px; /* 字体大小 */
+    color: #000000; /* 特殊颜色 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 新增的小字 */
+  .sub-text {
+    position: fixed;
+    padding: 5px 20px; /* 内边距 */
+    top: 50px; /* 位置在主文字下方 */
+    left: 200px; /* 向右移动 */
+    font-size: 14px; /* 较小的字体 */
+    color: #1ca012a3; /* 不同的颜色 */
+    letter-spacing: 5px;
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 左上角图片 */
+  .left-corner-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100px; /* 调整图片大小 */
+    height: 100px; /* 调整图片大小 */
+    z-index: 5; /* 保证背景覆盖其他元素 */
+  }
+
+  /* 右上角图片 */
+  .right-corner-image {
+    position: fixed;
+    top: -10px;
+    right: 0;
+    width: 100px; /* 调整图片大小 */
+    height: 100px; /* 调整图片大小 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
+  }
+
+  #text-bar {
+    display: flex;
+    position: absolute;
+    bottom: 8px; /* 定位到页面底部 */
+    left: 50%;
+    transform: translateX(-50%); /* 水平居中 */
+    align-self: end;
+    width: 66.66%;
+    height: 80%;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    display: flex;
+    z-index: 3;
+}
+
+#list-container {
+    width: 175px;
+    overflow-y: auto;
+    background-color: #317449;
+    padding: 10px;
+    z-index: 2;
+}
+
+#text-list {
+    align-self: center;
+    list-style-type: none;
+    padding: 0;
+    z-index: 2;
+}
+
+#text-list li {
+    color: #ffffff;
+    font-size: 20px;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    z-index: 2;
+}
+
+#text-list li:hover {
+    color: #d3e155;
+}
+
+#text-list li ul {
+    left: 50%;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#text-list li ul li {
+    padding: 8px 20px; /* Indent sub-items */
+    text-align: center; /* 文字水平居中 */
+    text-align: left;
+    border-bottom: none; /* Remove border for sub-items */
+    width: 90%; /* Limit width to allow centering */
+    margin: 0 auto; /* Center sub-items */
+}
+
+#text-list > li > ul > li {
+    text-align: center; /* 确保文本居中 */
+    /* 其他样式属性 */
+}
+
+
+
+
+#text-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 18px;
+    width: 0; 
+    min-width: 300px; 
+    padding: 10px;
+    background-color: #8b99867b;
+}
+
+.text-panel {
+    display: none;
+    width: 100%;
+}
+
+.text-panel p {
+   color:#444444;
+    margin: 0;
+    font-stretch: 2px;
+    
+}
+  
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-text">
+    <img src="src/logo_new.png" alt="小图标">
+    <span class="text">归“员”田居</span>
+  </div>
+
+  <div class="sub-text">
+    稻田系疗愈空间
+  </div>
+
+  <div class="navbar">
+    <a href="index.html">首页</a>
+    <a href="introduction.html">空间介绍</a>
+    <a href="conception.html">空间理念</a>
+    <a href="const_event.html">常驻活动</a>
+    <a href="special_event.html">特定疗愈活动</a>
+    <a href="staff.html">公司人员</a>
+  </div>
+  <img src="src/bamboo1.png" alt="左上角图片" class="left-corner-image">
+  <img src="src/bamboo2.png" alt="右上角图片" class="right-corner-image">
+</div>
+<div id="text-bar">
+  <div id="list-container">
+      <ul id="text-list">
+          <li data-target="text1">地理位置</li>
+          <li data-target="text2">空间构成
+            <ul>
+              <li data-target="text3" style="font-size: 15px;">自然景观</li>
+              <li data-target="text4" style="font-size: 15px;">疗愈建筑</li>
+              <li data-target="text5" style="font-size: 15px;">田间构筑物</li>
+            </ul>
+          </li>
+          <li data-target="text6">活动提要</li>
+          <!-- Add more list items as needed -->
+      </ul>
+  </div>
+  <div id="text-content">
+      <div id="text1" class="text-panel">
+          <p style="margin-top: 20px;">本项目位于浙江省湖州市安吉县的西南部，属报福镇洪家村村域内。</p>
+          <p>在区位方面，洪家村东临镇政府所在地，通过王章公路及乡道与灵峰寺相连，南接深溪村，东南侧通过乡道与安吉县山川乡云上草原相通，西邻中张村，北连龙王湖，通过104国道连接安吉中国大云海。</p>
+          <p>在景观资源方面，村庄坐落于天目山北麓和西苕溪上游的黄浦江源精品观光带中心地带，村内拥有国家级龙王山自然保护区、百亩杜鹃花基地等景区，自然风光优越。</p>
+          <p>在生态农业方面，洪家村的竹林在其中扮演着重要的角色。在适宜气候和肥沃土壤的作用下，当地的竹子质地坚韧，色泽鲜亮，经过精细的工艺，用其制成的竹制品美观、耐用，不仅满足了本地市场的需求，还远销国内外，深受消费者的喜欢。</p>
+          <p>洪家村在报福镇中占据着示范和引领的核心地位，以其显著的生态农业，尤其是其竹经济为经济支柱，同时在生态保护、旅游发展和环境整治等方面均取得了突出成就。该村不仅成功打造了多个旅游休闲项目，例如深溪峡谷悬崖漂流、小野衫屿露营基地、棋盘石度假村、杜鹃花基地、地质公园小镇等，成为吸引游客的热点，还在推动乡村振兴和农业创新方面发挥了重要作用，为镇域内的可持续发展树立了标杆。</p>
+      </div>
+      <div id="text2" class="text-panel" style="display: none;">
+          <p style="margin-top: 20px;">123</p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+      </div>
+      <div id="text3" class="text-panel" style="display: none;">
+        <p style="margin-top: 20px;">123</p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
+      <div id="text4" class="text-panel" style="display: none;">
+        <p style="margin-top: 20px;">两栋房屋分别为悦心居和静思阁，房屋在保留原本坡屋尖顶的建筑外观的基础上，在主入口两侧设计了透光玻璃落地窗，以打造稻田间清新明快的房屋为主旨遵从田园风格，使得木材与玻璃在田野间相相融合。木纹理的质感与玻璃轻巧通透的感官，使得整个房屋的视觉中心被定格在主入口之上，使得原先砖瓦结构的房屋更具备如同“在稻田间呼吸一般”的轻盈舒适感。淡雅的原木色搭配着黄绿色稻田，让整个空间充满生机与活力，仿佛回归大自然的怀抱，让人第一眼就被乡间淳朴悠闲氛围感所抚慰，给予心灵上的慰藉。</p>
+          <p>房屋外观采用了传统中式的装饰风格。墙面上镶嵌着精美的竹制中式花窗，透过花窗洒下的光影，宛如一幅幅流动的水墨画。而在房间外则设计了一串串清脆的竹铃。每当微风拂过，竹铃便发出悦耳的声音，宛如山间的清风与溪水交织出的自然乐章，让人身处其中怡然自得。整体装饰简洁而不失雅致，中式花窗与竹铃的点缀，为这间房屋增添了一抹独特的田园风味，让人仿佛置身于一个静谧而富有诗意的世界，为后续开展的各项疗愈项目奠定了东方宁静致远的空间环境。</p>
+          <p>房屋室内布局是由中式古风古韵元素而展开的。房屋分别起名为悦心居和静思阁。进入悦心居后，首先映入眼帘的是开敞的休憩与活动空间，摆放着舒适的休憩榻垫和茶歇座位。悦心居不仅设有舒适的会客洽谈的空间，同时也为开展室内的亲子手作活动提供了宽敞的桌面和座椅。静思阁则以接待及开展疗愈活动为主要功能，前来的顾客可以在品茶之余，伴着缕缕琴瑟与屋外虫鸣，进行静心冥想、打坐、抄写经书等各类疗愈项目。</p>
+          <p>不管是悦心居还是静思阁，凡是靠近窗户的地方都是一个温馨的接待空间，摆放着舒适的座椅和茶几。阳光透过窗户洒进室内，营造出一种温暖而舒适的氛围，适合彼此聚畅谈心事。</p>
+          <p>房屋两侧的窗被改造成了印有竹元素的可移动屏风门。阳光透过屏风洒下缕缕金光，形成了良好的室内光影效果。屏风可以让人们从室内移步到室外，推门则可进入改良过的木台。人们可以坐在在木台上休憩饮茶、舒展冥想，与房屋外金灿灿的稻田进行之间的观赏与互动，之中再无阻隔或屏障。这不仅做到了真正的“推门有景”，还拉近了房屋与田地之间的距离，拉近了人与大自然的互动与沟通。两个房屋的室内空间布局合理，功能齐全，既有疗愈身心的宁静空间，温馨舒适的接待空间，使人在这里感受到自然生态感和独属于乡间的闲暇安宁。</p>
+          <p>房屋保持了原有的砖结构土坯房结构，在此基础上加入了原木、竹编、玻璃以及大理石等材质。</p>
+          <p>房屋采用了大量的原木作为建筑外部墙面的主要装饰和外围走廊的主要材料，给人以柔和自然的感觉；原木元素表达了在城市水泥森林中、快节奏生活下的人们对大自然的向往和热爱，简单治愈的原木元素犹如一缕清风，扫除一天的疲劳，感受大自然对心灵的安抚。同时，建筑以玻璃作为主入口的主要材料，其具有独特的透明性和轻盈感，不仅能够为室内提供充足的自然光线，还能与周围环境和谐融合，创造出美感与舒适感相结合、自然与现代材料相结合的独特效果。除此之外，房屋因地制宜地加入了当地特色的竹编元素，增加建筑的美观性和特色性。多种材料的使用，以营造多样化的空间氛围，带来各种形式的美感，以自然材料为主，给人以质朴、宁静的感觉，木质的温暖色调和质感，使建筑呈现出独特的自然美观。</p>
+          <p>房屋周围的小面积空地被精心布置成了一处四季更迭、色彩斑斓的秘境。樟树以其四季常青的姿态挺立，为这片土地带来一抹沉稳与坚韧的绿色。春日里，樱花树竞相绽放，粉嫩的花瓣随风轻舞。夏日，向日葵成了这片小空地的主角，金黄色的花朵在阳光下闪耀着耀眼的光芒，传递着无限的生机与希望。同时与油菜金黄色的花海遥相呼应，将整个空间染成了金色的海洋，让人感受到夏日的热烈。秋风起，鸢尾花悄然绽放，以优雅的姿态和丰富的色彩装点着这片土地，为凉爽的秋季增添了一抹温馨与雅致。这些景观植物的巧妙搭配，不仅丰富了视觉体验，更使得房屋周边的环境层次分明，更好地创造了一个助人放松、减压和恢复心灵健康的自然景观环境。</p>
+          <p>金色的阳光透过稀疏的云层，洒在波光粼粼的稻田上，与其中的屋舍交织成一幅温馨和谐的景象。稻穗随风轻摆，发出沙沙的响声，如同低语，讲述着丰收的喜悦与岁月的静好。站在这片稻田边，望着这栋房屋，心灵仿佛得到了前所未有的洗涤与安宁，让人忘却尘世的烦恼，只想沉浸在这份宁静与美好之中，让时间缓缓流淌，享受这份难得的田园诗意。</p>
+      </div>
+      <div id="text5" class="text-panel" style="display: none;">
+        <p style="margin-top: 20px;">123</p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+      </div>
+      <div id="text6" class="text-panel" style="display: none;">
+        <p style="margin-top: 20px;">123</p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+      </div>
+          <!-- Add more text panels as needed -->
+  </div>
+</div>
+</body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const textList = document.getElementById('text-list');
+    const textPanels = document.querySelectorAll('.text-panel');
+    const defaultPanel = document.getElementById('text1');
+    const defaultListItem = textList.querySelector('[data-target="text1"]');
+
+    // 设置默认显示的文本面板和列表项样式
+    defaultPanel.style.display = 'block';
+    defaultListItem.style.color = '#ffb300a3';
+
+    textList.addEventListener('click', function(e) {
+        if (e.target.tagName === 'LI') {
+            // Hide all text panels
+            textPanels.forEach(panel => {
+                panel.style.display = 'none';
+            });
+
+            // Change color of all list items
+            textList.querySelectorAll('li').forEach(item => {
+                item.style.color = '';
+            });
+
+            // Show the selected text panel and change the color of the selected list item
+            const targetId = e.target.getAttribute('data-target');
+            const selectedPanel = document.getElementById(targetId);
+            selectedPanel.style.display = 'block';
+            e.target.style.color = '#ffb300a3';
+        }
+    });
+});
+
+</script>
+</html>
+
