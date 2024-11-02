@@ -3,20 +3,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1, minimun-scale=1, user-scale=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>归“员”田居</title>
 <style>
-  p {
-    text-indent: 2em; /* 设置段落首行缩进为2em */
-    padding: 5px;
-  }
-
   /* 全局设置 */
   body, html {
-    overflow: auto;
     margin: 0;
     padding: 0;
-    width: 100%;
     height: 100%;
     font-family: Arial, sans-serif; /* 设置默认字体 */
     background-image: url('src/background_color.png'); /* 添加背景图片 */
@@ -25,16 +18,9 @@
     background-repeat: no-repeat; /* 不重复背景图片 */
   }
 
-  .fixed-container{
-    position:fixed;
-    overflow: auto;
-    min-width: 1536px;
-    min-height: 720px;
-    overflow: auto;
-  }
   /* 顶部样式 */
   .header {
-    position: absolute; /* 固定顶部 */
+    position: fixed; /* 固定顶部 */
     top: 0;
     right: 0;
     width: 100%; /* 宽度为满屏 */
@@ -43,10 +29,11 @@
     display: flex;
     flex-direction: column; /* 垂直排列 */
   }
+
   /* 导航栏样式 */
   .navbar {
-    overflow-x: auto;
-    position: absolute; /* 固定顶部 */
+    overflow: hidden;
+    position: fixed; /* 固定顶部 */
     top: 0px;
     right: 0px;
     width: 100%; /* 宽度为满屏 */
@@ -58,7 +45,7 @@
     padding-right: 200px; /* 右侧内边距 */
     box-sizing: border-box; /* 确保padding不会增加元素宽度 */
     background-color: rgba(255, 255, 255, 0.7); /* 添加白色背景，透明度70% */
-    z-index: 4; /* 保证背景覆盖其他元素 */
+    z-index: 1; /* 保证背景覆盖其他元素 */
   }
   .navbar a {
     color: #545454; /* 文字颜色 */
@@ -66,7 +53,7 @@
     padding: 14px 20px; /* 内边距 */
     text-decoration: none; /* 去除下划线 */
     transition: color 0.3s; /* 添加过渡效果 */
-    z-index: 5; /* 保证背景覆盖其他元素 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
   }
   .navbar a:hover {
     color: #000000; /* 鼠标悬停时文字颜色变化 */
@@ -74,11 +61,11 @@
 
   /* 左上角图标和文本 */
   .logo-text {
-    position: absolute;
+    position: fixed;
     display: flex;
     align-items: center; /* 垂直居中 */
     padding: 10px; /* 内边距 */
-    z-index: 5; /* 保证背景覆盖其他元素 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
   }
   .logo-text img {
     vertical-align: middle; /* 图标垂直对齐 */
@@ -86,7 +73,7 @@
     margin-right: -150px; /* 图标右边距 */
     width: 248px; /* 图标宽度 */
     height: 351px; /* 图标高度 */
-    z-index: 5; /* 保证背景覆盖其他元素 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
   }
   .logo-text .text {
     margin-top: -125px;
@@ -95,41 +82,40 @@
     font-family: 'KaiTi', '楷体', serif; /* 使用特殊的cursive字体 */
     font-size: 30px; /* 字体大小 */
     color: #000000; /* 特殊颜色 */
-    z-index: 5; /* 保证背景覆盖其他元素 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
   }
 
   /* 新增的小字 */
   .sub-text {
-    position: absolute;
+    position: fixed;
     padding: 5px 20px; /* 内边距 */
     top: 50px; /* 位置在主文字下方 */
     left: 200px; /* 向右移动 */
     font-size: 14px; /* 较小的字体 */
     color: #1ca012a3; /* 不同的颜色 */
     letter-spacing: 5px;
-    z-index: 5; /* 保证背景覆盖其他元素 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
   }
 
   /* 左上角图片 */
   .left-corner-image {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100px; /* 调整图片大小 */
     height: 100px; /* 调整图片大小 */
-    z-index: 5; /* 保证背景覆盖其他元素 */
+    z-index: 2; /* 保证背景覆盖其他元素 */
   }
 
   /* 右上角图片 */
   .right-corner-image {
-    position: absolute;
+    position: fixed;
     top: -10px;
     right: 0;
     width: 100px; /* 调整图片大小 */
     height: 100px; /* 调整图片大小 */
     z-index: 2; /* 保证背景覆盖其他元素 */
   }
-
   #text-bar {
     display: flex;
     position: absolute;
@@ -223,10 +209,13 @@
     
 }
 
-.pics img {
+.pics{
   display: flex;
+}
+
+.pics img{
+  height: 200px;
   margin: 10px auto;
-  width: 80%;
 }
   
 </style>
@@ -271,89 +260,71 @@
       <div id="text1" class="text-panel">
         <h4>植物香薰</h4>
         <div class="pics">
-          <img src="src/常驻活动/嗅觉/植物香薰1.png" alt="植物香薰1">
+          <img src="src/常驻活动照片/嗅觉/植物香薰1.png" alt="植物香薰1">
+          <img src="src/常驻活动照片/嗅觉/植物香薰2.png" alt="植物香薰2">
         </div>
         <p>静思阁内的植物香薰主要是用大豆蜡制成，里面有放入提取的洪家村的杜鹃花制成的精油，另外可以选的是对应的纯天然的植物香薰。另外也有由安吉的白茶制成的植物香薰，它是树叶形状，在散发着茶香的同时也是极其美观的纪念品。这些纯天然香薰都带着大自然的香气，它可以使用者身临其境，给予其深层的放松和体验。</p>
-        <div class="pics">
-          <img src="src/常驻活动/嗅觉/植物香薰2.png" alt="植物香薰2">
-        </div>
         <h4>茶渣香皂</h4>
         <div class="pics">
-          <img src="src/常驻活动/嗅觉/茶渣香皂1.png" alt="茶渣香皂1">
+          <img src="src/常驻活动照片/嗅觉/茶渣香皂1.png" alt="茶渣香皂1">
+          <img src="src/常驻活动照片/嗅觉/茶渣香皂2.png" alt="茶渣香皂2">
         </div>
         <p>香气可以让人放下心中的石头，将注意力放在自己身上，制作香皂的过程可以让人进入心流状态，在一呼一吸之间体验白茶茶香与皂香带来的深度思考，减少大脑的负担。茶渣香皂主要取材于洪家村内产的安吉白茶，体验者需要在注意安全的情况下水浴加热皂基，在此之后倒入茶渣。确认加热完毕后加入精油搅拌，最后导入模具冷却。</p>
-        <div class="pics">
-          <img src="src/常驻活动/嗅觉/茶渣香皂2.png" alt="茶渣香皂2">
-        </div>
       </div>
       <div id="text2" class="text-panel" style="display: none;">
         <h4>疗愈植物瓶</h4>
         <div class="pics">
-          <img src="src/常驻活动/视觉/植物瓶1.jpeg" alt="植物瓶1">
+          <img src="src/常驻活动照片/视觉/植物瓶1.jpeg" alt="植物瓶1">
+          <img src="src/常驻活动照片/视觉/植物瓶2.jpeg" alt="植物瓶2">
         </div>
         <p>悦心居会提供各类植物草本材料，将大自然中具有疗愈作用的植物力量装进瓶子里。通过将房屋周边的水稻谷粒、樱花花瓣、香樟树叶、鸢尾花等所制成的干花按照不同的植物种类和比例调配，可有多种视觉疗愈效果。所制瓶中的植物元素能量可为低谷期的人带来正向能量，驱逐阴郁，舒缓心绪。</p>
-        <div class="pics">
-          <img src="src/常驻活动/视觉/植物瓶2.jpeg" alt="植物瓶2">
-        </div>
         <h4>曼陀罗绘画</h4>
         <div class="pics">
-          <img src="src/常驻活动/视觉/曼陀罗绘画1.jpeg" alt="曼陀罗绘画1">
+          <img src="src/常驻活动照片/视觉/曼陀罗绘画1.jpeg" alt="曼陀罗绘画1">
+          <img src="src/常驻活动照片/视觉/曼陀罗绘画2.jpeg" alt="曼陀罗绘画2">
         </div>
         <p>曼陀罗是佛教中的一种圆形图案，象征着宇宙的无限大和人类内在的神秘力量。基于心理学家荣格独创的绘画疗愈方式，通过绘画曼陀罗图案帮助治愈身心上的创伤和痛苦。在悦心居内宽敞的桌面上，人们可以挑选事先准备好的极具乡田特色的曼陀罗图案轮廓，享受绘画与过程中通过各类色彩的碰撞和填补起到整合内心混乱，疏通情绪，帮助人们发现自我和内在的潜力。</p>
-        <div class="pics">
-          <img src="src/常驻活动/视觉/曼陀罗绘画2.jpeg" alt="曼陀罗绘画2">
-        </div>
       </div>
       <div id="text3" class="text-panel" style="display: none;">
         <h4>草茶药</h4>
         <div class="pics">
-          <img src="src/常驻活动/味觉/草药茶.png" alt="草药茶">
+          <img src="src/常驻活动照片/味觉/草药茶.png" alt="草药茶">
         </div>
         <p>静思阁内提供了多类茶饮，茶饮的名字取自自我肯定冥想，以让体验者从点餐开始就走进疗愈世界，在茶饮中找寻自我的力量。草药茶以稻田中产出的水稻炒制金黄后泡出的茶水为茶底，有多种口味可以选取，满足体验者的多种需求，是只能在洪家村才能体验到的独特茶水。</p>
         <h4>治愈饮品</h4>
         <div class="pics">
-          <img src="src/常驻活动/味觉/疗愈饮品.png" alt="疗愈饮品2">
+          <img src="src/常驻活动照片/味觉/疗愈饮品.png" alt="疗愈饮品2">
+          <img src="src/常驻活动照片/味觉/疗愈饮品1.png" alt="疗愈饮品1">
         </div>
         <p>心情不好的时候，要吃一点甜的，当感到内心的压抑，没什么比香甜的饮品更能改变体验者的心情了。新中式是饮品行业发展的趋势，结合安吉白茶的优势，以白茶作为茶底，配上一定的葡萄、西瓜等水果，冰冰凉凉，渗透人心，一杯就可以让品尝者放下心理的烦恼，沉浸在开阔的空间里。</p>
-        <div class="pics">
-          <img src="src/常驻活动/味觉/疗愈饮品1.png" alt="疗愈饮品1">
-        </div>
       </div>
       <div id="text4" class="text-panel" style="display: none;">
         <h4>自然音疗</h4>
         <div class="pics">
-          <img src="src/常驻活动/听觉/自然之声1.jpeg" alt="自然音疗1">
+          <img src="src/常驻活动照片/听觉/自然之声1.jpeg" alt="自然音疗1">
+          <img src="src/常驻活动照片/听觉/自然之声2.jpeg" alt="自然音疗2">
         </div>
         <p>人的五官最早被开发的是听觉，因此音疗是极为有效的自然疗法。静思阁周边可听到风声及阵阵清风拂过树叶发出的梭梭声，还有乡间水渠的玲珑之声、田间虫鸣鸟叫声。搭配室内声音采集播放器，声音从内耳进入脑部深处，让人感受到大自然的美妙，一定程度上达到消除疲劳和紧张的效果。</p>
-        <div class="pics">
-          <img src="src/常驻活动/听觉/自然之声2.jpeg" alt="自然音疗2">
-        </div>
         <h4>乐器音疗</h4>
         <div class="pics">
-          <img src="src/常驻活动/听觉/手碟.jpeg" alt="乐器音疗1">
+          <img src="src/常驻活动照片/听觉/手碟.jpeg" alt="乐器音疗1">
+          <img src="src/常驻活动照片/听觉/水晶颂钵.jpeg" alt="乐器音疗2">
         </div>
         <p>音疗的共振形成柔和而和谐的声音可以促进细胞的活力，有助于平衡身体的能量。静思阁会储备一些特定频率音色的乐器，例如颂钵、水晶钵、风铃、手碟等乐器，柔和而和谐的声音可以促使人们进入冥想状态，从而降低心率、放松肌肉，减缓呼吸。所协同发出的音色可调整身体的能量场，直接影响神经系统，改变大脑中的物质释放，创造一种平衡和稳定的环境，使得身体和心理有积极变化。</p>
-        <div class="pics">
-          <img src="src/常驻活动/听觉/水晶颂钵.jpeg" alt="乐器音疗2">
-        </div>
       </div>
       <div id="text5" class="text-panel" style="display: none;">
         <h4>稻田瑜伽</h4>
         <div class="pics">
-          <img src="src/常驻活动/触觉/稻田瑜伽1.png" alt="稻田瑜伽1">
+          <img src="src/常驻活动照片/触觉/稻田瑜伽1.png" alt="稻田瑜伽1">
+          <img src="src/常驻活动照片/触觉/稻田瑜伽2.png" alt="稻田瑜伽2">
         </div>
         <p>稻田瑜伽可以很好的利用农创基地的稻田，为体验者提供新奇的体验。近在咫尺的金黄也在慢慢的呼吸，双手可以接触到的水稻苗正在茁壮成长，触觉带来的对生命的感知能让体验者感受到自己在世界中的位置。体验者可以选择在稻田上方的木质栈道内进行瑜伽，同时也可以选择在稻田内设置的“听雨”内练习瑜伽动作，两者都可以让体验者触碰到水稻，产生身在水稻田之中的感觉。</p>
-        <div class="pics">
-          <img src="src/常驻活动/触觉/稻田瑜伽2.png" alt="稻田瑜伽2">
-        </div>
         <h4>大地曼陀罗</h4>
         <div class="pics">
-          <img src="src/常驻活动/触觉/大地曼陀罗1.png" alt="大地曼陀罗1">
+          <img src="src/常驻活动照片/触觉/大地曼陀罗1.png" alt="大地曼陀罗1">
+          <img src="src/常驻活动照片/触觉/大地曼陀罗2.png" alt="大地曼陀罗2">
         </div>
         <p>大地曼陀罗是将大地艺术和曼陀罗绘制结合的自然疗愈项目，体验者可以在稻田、蔬果田地中采集不同种类的植物来随心绘制曼陀罗团，在寻找的过程中沉浸式体验和大自然触碰带来的魅力，从而达到连接自我和探寻自我的目的。农创基地农田面积较大，可提供水稻、樟树、向日葵等各类植物的花朵、叶片，在稻田或者栈道上都有较大的空间可以进行摆放。</p>
-        <div class="pics">
-          <img src="src/常驻活动/触觉/大地曼陀罗2.png" alt="大地曼陀罗2">
-        </div>
       </div>
   </div>
 </div>
